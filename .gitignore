@@ -1,0 +1,31 @@
+# API keys — NEVER commit these
+.env
+*.env
+
+# Results (large, regenerable) — push only aggregate summaries
+results/*/run_*/agent_logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Agent logs (large JSON files)
+**/agent_logs/
+
+# Virtual environment
+.venv/
