@@ -5,7 +5,7 @@ The first part of the paper aims to answer why cancel culture based on perceived
 
 The second part of the paper utilised LLM agent-based simulation examining the effect of social network visibility on cancel culture participation among citizens of liberal democracies.
 
-This project simulates a fictional liberal democracy (Norvane) where LLM-powered agents with distinct personas interact on a social media platform (Pulse) after a public figure makes discriminatory statements towards a fictional minority group (Veltari). The experiment tests whether observing others' responses on social media pulls initially skeptical citizens back into cancel culture participation.
+This project simulates a fictional liberal democracy (Norvane) where LLM-powered agents with distinct personas interact on a social media platform (Pulse) after a public figure makes discriminatory statements towards a fictional minority group (Veltari). The experiment tests whether observing others' responses on social media pulls initially skeptical citizens back into cancel culture participation. 
  
 ## Paper
 [WIP at the moment]
@@ -29,7 +29,6 @@ Four experiments compare network vs isolated conditions:
 
 Each experiment runs with 50 agents, 5 rounds, and 5 independent runs. Population ratio: 15% Persona A, 70% Persona B/B', 15% Persona C.
 
-LLM Model used is GPT-4.1
 ## Setup
 ```bash
 # Install dependencies
@@ -41,13 +40,13 @@ export OPENAI_API_KEY="your-key-here"
 
 ## Running Experiments
 ```bash
-# Quick test (5 agents, ~15 API calls, ~2 min)
+# Quick test (5 agents)
 python run_experiment.py --n_agents 5 --n_rounds 2 --n_runs 1 --experiment experiment_1
 
-# Single experiment (50 agents, ~300 API calls, ~20 min)
+# Single experiment (50 agents)
 python run_experiment.py --n_agents 50 --n_rounds 5 --n_runs 1 --experiment experiment_2
 
-# Full experiment (all 4 experiments, 5 runs each, ~6,000 API calls, ~6 hours)
+# Full experiment (all 4 experiments, 5 runs each)
 caffeinate -i python run_experiment.py --n_agents 50 --n_rounds 5 --n_runs 5
 ```
 
@@ -65,7 +64,7 @@ caffeinate -i python run_experiment.py --n_agents 50 --n_rounds 5 --n_runs 5
 │   │   ├── simulation.py          # Core round loop and feed construction
 │   │   └── experiment_runner.py   # Orchestrates experiments × runs, saves outputs
 │   └── utils/
-│       └── llm_utils.py           # Anthropic Claude API wrapper with retry logic
+│       └── llm_utils.py           # Open AI API wrapper with retry logic
 ├── results/                       # Experiment output data
 │   ├── all_round_data_long.csv    # Combined data across all experiments and runs
 │   ├── experiment_1/
@@ -78,30 +77,20 @@ caffeinate -i python run_experiment.py --n_agents 50 --n_rounds 5 --n_runs 5
 │   ├── experiment_1a/ ...
 │   ├── experiment_2/ ...
 │   └── experiment_2a/ ...
-└── figures/                       # Generated figures (not in repo — regenerate locally)
+
 ```
-
-## Analysis Scripts
-
-Analysis scripts are not included in this repository but can be provided on request. They include:
-- `generate_figures.py` — Publication-quality figures (participation rates, heatmaps, COBRA charts)
-- `statistical_tests.py` — T-tests and Cohen's d for condition comparisons
-- `content_analysis.py` — Theme analysis of agent-generated content
-- `reasoning_analysis_all.py` — Theme analysis of agent reasoning
-
-## Key Results
-
-- **Persona validation**: Persona A = 0% participation (all rounds), Persona C ≈ 100% (early rounds), confirming control and zealot behavior.
-- **B' holdback**: 0% participation in round 1 across both conditions, confirming protest memory persona.
-- **Network effect on B'**: Participation jumped from 0% to 100% in round 2 (network) vs 61% (isolated), t(4) = 12.12, p < .001, d = 7.66.
-- **Bystander effect on B**: Network B agents participated less than isolated B agents in rounds 3–4 (p < .01), suggesting seeing others act reduced individual engagement.
-- **Engagement intensity**: Network B' agents chose higher COBRA tiers (contributing, creating) while isolated B' agents predominantly liked (consuming).
 
 ## Model
 
-All agents use **Claude Sonnet 4.6** (`claude-sonnet-4-6`) via the Anthropic API. Temperature = 0.7.
+All agents use **GPT-4.1** (`GPT-4.1`) via the Open AI API. Temperature is 0.6 for experiments run; 0.2 for internalization of personas. 
 
 ## Citation
-```
-[Citation when available]
-```
+
+Tang, Dustie. Project Norvane: LLM agent-based simulation for studying cancel culture participation.
+https://github.com/dustietang/Project-Norvane
+
+## Acknowledgements
+
+The code structure of this project was inspired by the [LLM-SocioPol](https://github.com/CausalMP/LLM-SocioPol) framework by Shirani & Bayati (2025). No code was copied from the original repository.
+
+> Shirani, S., & Bayati, M. (2025). Simulating and Experimenting with Social Media Mobilization Using LLM Agents. ArXiv.org. https://arxiv.org/abs/2510.26494
